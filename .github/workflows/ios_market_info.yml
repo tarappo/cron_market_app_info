@@ -22,8 +22,8 @@ jobs:
     - name: Current Version
       id: current_version
       run: |
-        if [ -f version.txt ]; then
-            echo "version.txtが存在します"
+        if [ -e version.txt ]; then
+            echo "version.txtが存在します：$(cat version.txt)"
             echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
         else
             echo "version=0.0.0"
