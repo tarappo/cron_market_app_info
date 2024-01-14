@@ -26,6 +26,8 @@ jobs:
             echo "version.txtが存在します：$(cat version.txt)"
             if [ $(cat version.txt) == "null" ]
             then
+                echo "verion.txtの値がnullのため、0.0.0を出力します"
+                echo "version=0.0.0" >> $GITHUB_OUTPUT
             else
                 echo "verion.txtの値を出力します"
                 echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
