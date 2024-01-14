@@ -13,13 +13,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Current Version
+      id: current_version
+      run: |
+        echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+    - name: Cache
+      id: cache-primes
+      uses: actions/cache@v3
+      with:
+        path: version.txt
+        key: version-${{ steps.current_version.outputs.version }}
     - name: iOS Market Information
       id: appstore_information
       uses: tarappo/market_app_info@main
       with:
         bundle_identifier: "com.facebook.Facebook"
+        version_number: ${{ steps.current_version.outputs.version }}
     - name: Ouputs
       run: |
         echo ${{ steps.appstore_information.outputs.app_name }}
         echo ${{ steps.appstore_information.outputs.release_date }}
         echo ${{ steps.appstore_information.outputs.version }}
+
+        # 値がある場合は、version.txtを更新する
+        if [ -n "${{ steps.appstore_information.outputs.version }}" ]; then
+          echo ${{ steps.appstore_information.outputs.version }} > version.txt
+        fi
