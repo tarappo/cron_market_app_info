@@ -26,6 +26,7 @@ jobs:
             echo "version.txtが存在します：$(cat version.txt)"
             if [ $(cat version.txt) == "null" ]
             then
+            else
                 echo "verion.txtの値を出力します"
                 echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
             fi
@@ -46,6 +47,6 @@ jobs:
 
         # 値がある場合は、version.txtを更新する
         if [ -n "${{ steps.appstore_information.outputs.version }}" ]; then
-            echo "version.txtを更新します"
+            echo "version.txtを更新します：${{ steps.appstore_information.outputs.version }}"
             echo ${{ steps.appstore_information.outputs.version }} > version.txt
         fi
