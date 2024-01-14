@@ -41,5 +41,6 @@ jobs:
 
         # 値がある場合は、version.txtを更新する
         if [ -n "${{ steps.appstore_information.outputs.version }}" ]; then
-          echo ${{ steps.appstore_information.outputs.version }} > version.txt
+            echo "version.txtを更新します"
+            echo ${{ steps.appstore_information.outputs.version }} > version.txt
         fi
