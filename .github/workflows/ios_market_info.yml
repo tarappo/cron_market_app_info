@@ -29,7 +29,7 @@ jobs:
       run: |
         if [ -e version.txt ]; then
             echo "version.txtが存在します：$(cat version.txt)"
-            if [ $(cat version.txt) == "null" ]
+            if [ $(cat version.txt) = "null" ]
             then
                 echo "verion.txtの値がnullのため、0.0.0を出力します"
                 echo "version=0.0.0" >> $GITHUB_OUTPUT
@@ -56,7 +56,7 @@ jobs:
         echo ${{ steps.appstore_information.outputs.version }}
 
         # 値がある場合は、version.txtを更新する
-        if [ -n "${{ steps.appstore_information.outputs.version }}" ]; then
+        if [ "${{ steps.appstore_information.outputs.version }}" != "null" ]; then
             echo "version.txtを更新します：${{ steps.appstore_information.outputs.version }}"
             echo ${{ steps.appstore_information.outputs.version }} > version.txt
         fi
