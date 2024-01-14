@@ -1,0 +1,25 @@
+name: "iOS Market Information"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: iOS Market Information
+      id: appstore_information
+      uses: tarappo/market_app_info@v1.0.0
+      with:
+        bundle_identifier: "com.facebook.Facebook"
+    - name: Ouputs
+      run: |
+        echo ${{ steps.appstore_information.outputs.app_name }}
+        echo ${{ steps.appstore_information.outputs.release_date }}
+        echo ${{ steps.appstore_information.outputs.version }}
