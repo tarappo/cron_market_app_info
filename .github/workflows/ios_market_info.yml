@@ -13,12 +13,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: IDの生成
+      id: build-id
+      run: |
+        echo "name=id::$(date +%s)" >> $GITHUB_OUTPUT
     - name: Cache
-      id: cache-primes
+      id: cache
       uses: actions/cache@v3
       with:
         path: version.txt
-        key: version
+        key: version-${{ steps.build-id.outputs.id }}
+        restore-keys: version-
     - name: Current Version
       id: current_version
       run: |
@@ -55,10 +60,3 @@ jobs:
             echo "version.txtを更新します：${{ steps.appstore_information.outputs.version }}"
             echo ${{ steps.appstore_information.outputs.version }} > version.txt
         fi
-    - name: Save Primes
-      id: cache-primes-save
-      uses: actions/cache/save@v3
-      with:
-          path: |
-            version.txt
-          key: version
