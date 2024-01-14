@@ -68,7 +68,18 @@ jobs:
       id: slack
       uses: slackapi/slack-github-action@v1.24.0
       with:
-          channel-id: '#market_app_info'
-          slack-message: "最新バージョン：${{ steps.latest_output.outputs.new_version }}"
+        payload: |
+            {
+            "text": "最新バージョン：${{ steps.latest_output.outputs.new_version }}",
+            "blocks": [
+                {
+                "type": "section",
+                "text": {
+                    "type": "mrkdwn",
+                    "text": "最新バージョン：${{ steps.latest_output.outputs.new_version }}"
+                }
+                }
+            ]
+            }
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
