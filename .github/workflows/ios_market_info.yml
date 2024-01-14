@@ -24,7 +24,11 @@ jobs:
       run: |
         if [ -e version.txt ]; then
             echo "version.txtが存在します：$(cat version.txt)"
-            echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            if [ $(cat version.txt) == "null" ]
+            then
+                echo "verion.txtの値を出力します"
+                echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
+            fi
         else
             echo "version=0.0.0"
         fi
