@@ -49,7 +49,8 @@ jobs:
       with:
         bundle_identifier: "com.facebook.Facebook"
         version_number: ${{ steps.current_version.outputs.version }}
-    - name: Ouputs
+    - name: Latest Market Information Ouputs
+      id: latest_output
       run: |
         echo ${{ steps.appstore_information.outputs.app_name }}
         echo ${{ steps.appstore_information.outputs.release_date }}
@@ -59,4 +60,15 @@ jobs:
         if [ "${{ steps.appstore_information.outputs.version }}" != "null" ]; then
             echo "version.txtを更新します：${{ steps.appstore_information.outputs.version }}"
             echo ${{ steps.appstore_information.outputs.version }} > version.txt
+            echo "new_version=$(cat version.txt)" >> $GITHUB_OUTPUT
+        else
+            echo "最新バージョンはありませんでした"
         fi
+    - name: Post to a Slack channel
+      id: slack
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+          channel-id: '#market_app_info'
+          slack-message: "最新バージョン：${{ steps.latest_output.outputs.new_version }}"
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
