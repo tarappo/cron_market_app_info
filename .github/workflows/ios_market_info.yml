@@ -13,16 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Current Version
-      id: current_version
-      run: |
-        echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
     - name: Cache
       id: cache-primes
       uses: actions/cache@v3
       with:
         path: version.txt
-        key: version-${{ steps.current_version.outputs.version }}
+        key: version
+    - name: Current Version
+      id: current_version
+      run: |
+        echo "version=$(cat version.txt)" >> $GITHUB_OUTPUT
     - name: iOS Market Information
       id: appstore_information
       uses: tarappo/market_app_info@main
