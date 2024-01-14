@@ -66,7 +66,7 @@ jobs:
             echo "new_version=null" >> $GITHUB_OUTPUT
         fi
     - name: Post to a Slack channel
-      if: ${{ steps.latest_output.outputs.new_version }} != "null"
+      if: ${{ steps.latest_output.outputs.new_version != 'null' }}
       id: slack
       uses: slackapi/slack-github-action@v1.24.0
       with:
