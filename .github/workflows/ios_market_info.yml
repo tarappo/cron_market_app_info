@@ -56,6 +56,7 @@ jobs:
         id: latest_output
         run: |
             echo ${{ steps.appstore_information.outputs.app_name }}
+            echo ${{ steps.appstore_information.outputs.release_formatted_date }}
             echo ${{ steps.appstore_information.outputs.release_date }}
             echo ${{ steps.appstore_information.outputs.version }}
 
@@ -75,7 +76,7 @@ jobs:
         with:
             payload: |
                 {
-                "text": "対象アプリ：${{ steps.appstore_information.outputs.app_name }}\n最新バージョン：${{ steps.latest_output.outputs.new_version }}",
+                "text": "対象アプリ：${{ steps.appstore_information.outputs.app_name }}\n最新バージョン：${{ steps.latest_output.outputs.new_version }}（${{ steps.appstore_information.outputs.release_formatted_date }}）",
                 "blocks": [
                     {
                     "type": "section",
