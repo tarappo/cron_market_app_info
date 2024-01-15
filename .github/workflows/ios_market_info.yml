@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-            bundle_identifier: ["com.facebook.Facebook"]
+            bundle_identifier: ["com.facebook.Facebook", "com.atebits.Tweetie2"]
     steps:
       - uses: actions/checkout@v4
       - name: IDの生成
@@ -75,7 +75,7 @@ jobs:
         with:
             payload: |
                 {
-                "text": "最新バージョン：${{ steps.latest_output.outputs.new_version }}",
+                "text": "対象アプリ：${{ steps.appstore_information.outputs.app_name }}\n最新バージョン：${{ steps.latest_output.outputs.new_version }}",
                 "blocks": [
                     {
                     "type": "section",
