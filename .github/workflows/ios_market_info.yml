@@ -1,4 +1,4 @@
-name: "iOS Market Information"
+name: "iOS Market Information Using Cache"
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
             bundle_identifier: ["com.facebook.Facebook", "com.atebits.Tweetie2"]
     steps:
       - uses: actions/checkout@v4
-      - name: IDの生成
+      - name: Generate ID
         id: build-id
         run: |
             echo "name=id::$(date +%s)" >> $GITHUB_OUTPUT
